@@ -1,0 +1,3 @@
+Hello Vinaya!
+This file is created, written and read in same program.
+Now writing using BufferedWriter.

@@ -1,0 +1,6 @@
+Feature: Login using Excel data
+Scenario: Login with Excel users
+Given User launches browser
+When User opens login page
+And User logs in using Excel data
+Then User should be redirected to newpage

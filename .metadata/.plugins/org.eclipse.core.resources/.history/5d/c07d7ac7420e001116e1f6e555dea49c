@@ -1,0 +1,28 @@
+package com.api;
+
+import org.testng.annotations.Test;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+
+public class Put {
+	@Test
+	public void updateProductTest()
+	{
+		String s = "{\n" +
+				"\"title\": \"Updated Mobile\",\n" +
+                "\"price\": 14000,\n" +
+                "\"description\": \"updated smartphone\",\n" +
+                "\"category\": \"electronics\"\n" +
+                "}";
+		given()
+			.header("content-type","application/json")
+			.body(s);
+		when()
+			.put("https://dummyjson.com/products/1")
+		.then()
+			.statusCode(200)
+			.body("title",equalTo("Updated Mobile"));
+			.log().all();
+	}
+}

@@ -1,0 +1,21 @@
+package com.api;
+
+import static io.restassured.RestAssured.get;
+import static org.hamcrest.Matchers.*;
+import org.testng.annotations.Test;
+
+
+public class RESTAPI 
+{
+	@Test
+	
+	public void getUserTest()
+	{
+		get("https://dummyjson.com/products/2")
+		.then()
+		.statusCode(200)
+		.body("id",equalTo(2));
+		//.log().all();
+
+	}
+}

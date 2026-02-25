@@ -1,0 +1,19 @@
+package com.api;
+
+import org.testng.annotations.Test;
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+
+public class GetAll {
+
+    @Test
+    public void getAllProductsTest() {
+
+        get("https://dummyjson.com/products")
+        .then()
+            .statusCode(200)
+            .body("products.size()", greaterThan(0))
+            .log().all(); 
+    }
+}

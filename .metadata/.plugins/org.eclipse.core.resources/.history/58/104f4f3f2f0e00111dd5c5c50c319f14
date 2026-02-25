@@ -1,0 +1,22 @@
+package com.api;
+
+import org.testng.annotations.Test;
+
+public class Post {
+	@Test
+	public void createProductTest() {
+
+	    String requestBody = "{\n" +
+	            "\"title\": \"New Phone\",\n" +
+	            "\"price\": 15000\n" +
+	            "}";
+	        .header("Content-Type", "application/json")
+	        .body(requestBody)
+	    .when()
+	        .post("https://dummyjson.com/products/add")
+	    .then()
+	        .statusCode(200)
+	        .log().all();
+	}
+
+}

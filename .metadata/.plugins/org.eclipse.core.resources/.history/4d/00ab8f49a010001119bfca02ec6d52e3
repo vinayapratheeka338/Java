@@ -1,0 +1,7 @@
+Feature: Login functionality
+Scenario: Login with multiple users
+Given User launch the browser
+When User open the login page
+And User enters credentials
+And User clicks on login button
+Then User should be redirected to productspage

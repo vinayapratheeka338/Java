@@ -1,0 +1,9 @@
+Feature: Login functionality
+Scenario: Login with multiple usernames
+Given User launch browser
+When User opens login page
+And User enters multiple usernames, password and login
+	| standard_user |
+	| problem_user |
+	| error_user |
+Then User redirected to new page

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;vinaya.RightTri&apos; to &apos;LeftTri&apos;&#x0D;&#x0A;- Original project: &apos;Wipro_B1&apos;&#x0D;&#x0A;- Original element: &apos;vinaya.RightTri&apos;&#x0D;&#x0A;- Renamed element: &apos;vinaya.LeftTri&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;RightTri&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;vinaya{RightTri.java[RightTri" matchStrategy="1" name="LeftTri" qualified="false" references="true" similarDeclarations="false" stamp="1768286192236" textual="false" version="1.0"/>
+</session>

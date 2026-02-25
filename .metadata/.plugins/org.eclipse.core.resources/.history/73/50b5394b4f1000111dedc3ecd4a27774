@@ -1,0 +1,125 @@
+package com.api;
+
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+
+import static io.restassured.RestAssured.*;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class Assessment1 {
+
+    public static void main(String[] args) {
+
+        RestAssured.baseURI = "https://dummyjson.com";
+
+        try {
+
+            // ----------------------------
+            // STEP 1: Register User
+            // ----------------------------
+
+        	String registerBody = "{\n" + 
+        			" \"username\": \"emilys\",\n" + 
+        			" \"password\": \"emilyspass\"\n" + "}";
+
+
+            long startTime = System.currentTimeMillis();
+
+            Response registerResponse =
+                    given()
+                        .header("Content-Type", "application/json")
+                        .body(registerBody)
+                    .when()
+                        .post("/auth/login")
+                    .then()
+                        .statusCode(200)
+                        .log().all()
+            				.extract().response();
+
+            long responseTime = System.currentTimeMillis() - startTime;
+
+            if (responseTime > 3000) {
+                throw new RuntimeException("Register API too slow: " + responseTime + " ms");
+            }
+
+            System.out.println("Register Response: " + registerResponse.asString());
+
+            // ----------------------------
+            // STEP 2: Parse token using Gson
+            // ----------------------------
+
+            JsonObject jsonObject = JsonParser
+                    .parseString(registerResponse.asString())
+                    .getAsJsonObject();
+
+            String accessToken = jsonObject.get("token").getAsString();
+            String userId = jsonObject.get("id").getAsString();
+
+            if (accessToken == null || accessToken.isEmpty()) {
+                throw new RuntimeException("Token not found!");
+            }
+
+            System.out.println("Access Token: " + accessToken);
+
+            // ----------------------------
+            // STEP 3: Get Profile
+            // ----------------------------
+
+            Response profileResponse =
+                    given()
+                        .header("Authorization", "Bearer " + accessToken)
+                    .when()
+                        .get("/auth/me")
+                    .then()
+                        .statusCode(200)
+                        .extract().response();
+
+            System.out.println("Profile Response: " + profileResponse.asString());
+
+            String name = profileResponse.jsonPath().getString("firstName");
+            String email = profileResponse.jsonPath().getString("email");
+
+            if (name == null || email == null) {
+                throw new RuntimeException("Profile fields missing!");
+            }
+
+            // ----------------------------
+            // STEP 4: Update Profile
+            // ----------------------------
+
+            String updateBody = "{\n" +
+                    "  \"name\": \"Updated Vinaya\"\n" +
+                    "}";
+
+            Response updateResponse =
+                    given()
+                        .header("Authorization", "Bearer " + accessToken)
+                        .header("Content-Type", "application/json")
+                        .body(updateBody)
+                    .when()
+                        .put("/users/")
+                    .then()
+                        .statusCode(200)
+                        .extract().response();
+
+            System.out.println("Update Response: " + updateResponse.asString());
+
+            String updatedName = updateResponse.jsonPath().getString("name");
+
+            if (!"Updated Vinaya".equals(updatedName)) {
+                throw new RuntimeException("Name not updated properly");
+            }
+
+            // ----------------------------
+            // FINAL SUCCESS
+            // ----------------------------
+
+            System.out.println("\n ALL API TESTS PASSED SUCCESSFULLY!");
+
+        } catch (Exception e) {
+            System.out.println("\n TEST FAILED: " + e.getMessage());
+        }
+    }
+}
