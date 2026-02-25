@@ -1,4 +1,0 @@
-Hello everyone!
-Hello Java
-A
-BufferedWriter
