@@ -1,6 +1,0 @@
-Feature: Login using Excel data
-Scenario: Login with Excel users
-Given I launch browser
-When I open login page
-And User logs in using DB data
-Then I should be redirected to newpage
